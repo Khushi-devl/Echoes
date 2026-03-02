@@ -1,201 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Upload and Display Video Clips</title> <link rel="stylesheet" href="index.css">
-    <title>Soulful Musings</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soulful Musings ✨ My Digital Scrapbook</title>
     <link rel="stylesheet" href="index.css">
-    
-    <style>
-        
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        header, footer { background-color: #393636; color: #fff; text-align: center; padding: 10px 0; }
-        
-        /* Logo Styles */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3), 
-                        0 4px 15px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            min-width: 70px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
-        }
-        
-        .logo:hover::before {
-            left: 100%;
-        }
-        
-        .logo:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4), 
-                        0 6px 20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        
-        .logo-text {
-            font-size: 22px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
-                         0 1px 2px rgba(255, 255, 255, 0.1);
-            font-family: 'Arial Black', 'Helvetica Bold', sans-serif;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Responsive logo */
-        @media (max-width: 768px) {
-            .logo {
-                padding: 12px 20px;
-                min-width: 60px;
-            }
-            
-            .logo-text {
-                font-size: 20px;
-                letter-spacing: 2px;
-            }
-        }
-        nav ul { list-style-type: none; padding: 0; }
-        nav ul li { display: inline; margin-right: 10px; }
-        nav ul li a { color: #ebe3e5; text-decoration: none;
-        font-size: 150%; text-decoration: underline;}
-        main { padding: 20px; }
-        article { background-color: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); position: relative; }
-        h2 { color: #1b1a1a; }
-        footer p { margin: 0; }
-        .mood { display: inline-block; width: 20px; height: 20px; border-radius: 50%; margin-right: 5px; }
-        .happy { background-color: rgb(218, 99, 20); }
-        .Excited{ background-color: rgb(218, 99, 20); }
-        .motivated{ background-color: rgb(218, 99, 20); }
-        .neutral { background-color: rgb(15, 160, 119); }
-        .Motivated{ background-color: rgb(15, 160, 119); }
-        .Years{ background-color: rgb(15, 160, 119); }
-        .sad { background-color: rgb(169, 66, 116); }
-        .Need{ background-color: rgb(15, 160, 119); }
-        .Decade{ background-color: rgb(15, 160, 119); }
-        .edit, .delete { position: absolute; top: 10px; right: 10px; cursor: pointer; }
-        .delete { right: 40px; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Soulful Musings</h1>
-        <div class="logo-container">
-            <div class="logo">
-                <span class="logo-text">SM</span>
-            </div>
+    <div class="video-bg-container">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="C:\Users\ASUS\Downloads\3015510-hd_1920_1080_24fps.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="cute-header">
+        <div class="top-bar">
+            <button id="authToggleBtn">💖 Login</button>
+            <button id="themeToggleBtn">🌙 Mode</button>
         </div>
-        <button id="themeToggleBtn" style="position:absolute; top:20px; right:20px; padding:6px 16px; border-radius:6px; border:none; cursor:pointer;">🌙 Dark Mode</button>
-        <button id="authToggleBtn" style="position:absolute; top:20px; left:20px; padding:6px 16px; border-radius:6px; border:none; cursor:pointer;">Login/Register</button>
-        <div id="authBackdrop" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(30,40,60,0.35); z-index:999;"></div>
-        <div id="authDropdown" style="display:none; position:absolute; left:20px; top:60px; z-index:1000; background:#fff; border-radius:10px; box-shadow:0 4px 24px rgba(0,0,0,0.12); padding:24px 18px; min-width:260px;">
-            <button class="close-auth" aria-label="Close">&times;</button>
-            <form id="registerForm" style="margin-bottom: 24px;">
-                <h2>Register</h2>
-                <label class="highlight-label" for="registerUsername">Username:</label>
-                <input type="text" id="registerUsername" required>
-                <label class="highlight-label" for="registerPassword">Password:</label>
-                <input type="password" id="registerPassword" required>
-                <button type="submit">Register</button>
-                <div id="registerMsg" style="color: #b22222; margin-top: 8px;"></div>
-            </form>
-            <form id="loginForm">
-                <h2>Login</h2>
-                <label class="highlight-label" for="loginUsername">Username:</label>
-                <input type="text" id="loginUsername" required>
-                <label class="highlight-label" for="loginPassword">Password:</label>
-                <input type="password" id="loginPassword" required>
-                <button type="submit">Login</button>
-                <div id="loginMsg" style="color: #b22222; margin-top: 8px;"></div>
-            </form>
-        </div>
-        <div id="userInfo" style="display:none; margin-bottom: 24px;"></div>
-        <p1>Where every thought is a whisper from the heart, and every entry a journey within.</p1>
-        <nav>
-            <ul>
-                <li><a href="#about">About Me</a></li>
-                <li><a href="#entries">Journal Entries</a></li>
-                
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+        <h1 class="cursive-logo">Soulful Musings</h1>
+        <p class="subtitle">A safe space for your whispers... ✨</p>
+        
+        <nav class="pill-nav">
+            <a href="#entries">My Diary</a>
+            <a href="#gratitude">Gratitude</a>
+            <a href="#goals">My Dreams</a>
+            <a href="#public-feed">Global Feed</a>
         </nav>
     </header>
-    <main>
-        <div id="appContent">
-            <section id="home">
-                <h2>Welcome to Soulful Musings</h2>
-                <p>This is my personal space where I document my thoughts, experiences, and daily life. Feel free to browse through my journal entries and get to know more about me.</p>
-            </section>
-            <section id="about">
-                <h2>About Me</h2>
-                <p>Hi! I'm Khushi, a passionate individual who loves to explore new things and share my experiences with the world. Welcome to my personal journal. Feel free to add yours to inspire other people all over the world.</p>
-                <video src ="C:\Users\ASUS\Downloads\3015510-hd_1920_1080_24fps.mp4" width="700" height="700" controls></video>
-            </section>
-            <section id="entries">
-                <h2>Journal Entries</h2>
-                <form id="entries">
-                    <label class="highlight-label" for="entryTitle">Title:</label>
-                    <input type="text" id="entryTitle" name="entryTitle" required><br><br>
-                    <label class="highlight-label" for="entryContent">Content:</label><br>
-                    <textarea id="entryContent" name="entryContent" rows="4" cols="50" required></textarea><br>
-                    <label class="highlight-label">Mood:</label>
-                    <div class="mood-options">
-                        <input type="radio" id="happy" name="mood" value="happy" required>
-                        <label for="happy">Happy</label>
-                        <input type="radio" id="neutral" name="mood" value="neutral" required>
-                        <label for="neutral">Neutral</label>
-                        <input type="radio" id="sad" name="mood" value="sad" required>
-                        <label for="sad">Sad</label>
-                    </div>
-                    <button type="button" onclick="addEntry('entries', 'journalEntries')">Add Entry</button>
-                </form>
-                <div id="journalMsg" style="color: #b22222; margin-bottom: 8px;"></div>
-                <div id="journalPreview" style="margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 6px; display: none;"></div>
-                <div id="journalEntries"></div>
-                <h3>Your Golden Memories</h3>
-                <form id="uploadForm">
-                    <label class="highlight-label" for="videoUpload">Upload Video:</label>
-                    <input type="file" id="videoUpload" accept="video/*" multiple><br><br>
-                    <div id="videoPreviewContainer" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
-                    <button type="button" onclick="uploadVideo()">Upload</button>
-                </form>
-                <div id="videoMsg" style="color: #b22222; margin-bottom: 8px;"></div>
-                <div id="videoContainer"></div>
-            </section>
-        </div>
-    </main>
-    <footer>
-        <section id="contact">
-            <p>Contact</p>
-            <p>If you want to get in touch, feel free to <a href="mailto:khushi@example.com">email me</a>.</p>
-        </section>
-        <p>&copy; 2024 Soulful Musings</p>
-    </footer>
-    <script src="index.js"></script>
-</body>
-</html>
+
+    <main id="appContent">
+        <section id="entries" class="scrapbook-card">
+            <div class="washi-tape"></div>
+            <h2>Dear Diary... ✍️</h2>
+            <form id="journalForm">
+                <input type="text" id="entryTitle" placeholder="Title of my day..." required>
+                <textarea id="entryContent" rows="4" placeholder="How was your day, Khushi?" required></textarea>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Current Vibe:</label>
+                        <select id="entryMood">
+                            <option value="happy">✨ Sparkly/Happy</option>
+                            <option value="chill">🌿 Calm/Chill</option>
+                            <option value="sad">☁️ Emotional/Sad</option>
+                            <option value="busy">🐝 Productive/Busy</option>
